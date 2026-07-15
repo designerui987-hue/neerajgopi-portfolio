@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { Home, Layers, Workflow, Palette, Sparkles, User, Mail, FileDown } from "lucide-react";
-import { useRef, useState, type ReactNode } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { Home, Layers, Workflow, Palette, User, Mail, FileDown, Sun, Moon } from "lucide-react";
+import { useRef, useState, useEffect, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { useMagnetic } from "@/components/magnetic";
 
@@ -29,6 +29,27 @@ const RESUME_URL = "/resume.pdf";
 export function FloatingNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [hovered, setHovered] = useState<string | null>(null);
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const reduced = useReducedMotion();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const activeTheme = document.documentElement.classList.contains("light") ? "light" : "dark";
+      setTheme(activeTheme);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    if (nextTheme === "light") {
+      document.documentElement.classList.add("light");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.remove("light");
+      localStorage.setItem("theme", "dark");
+    }
+  };
 
   return (
     <>
@@ -108,6 +129,45 @@ export function FloatingNav() {
               </motion.span>
             )}
           </a>
+
+          {/* Divider + Theme Toggle */}
+          <div className="my-1 h-px w-full bg-border/70" />
+          <button
+            onClick={toggleTheme}
+            onMouseEnter={() => setHovered("theme")}
+            onMouseLeave={() => setHovered(null)}
+            className="group relative flex h-11 w-11 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <MagneticSlot className="relative flex h-11 w-11 items-center justify-center rounded-xl">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={theme}
+                  initial={{ opacity: 0, rotate: -30, scale: 0.8 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 30, scale: 0.8 }}
+                  transition={reduced ? { duration: 0 } : { duration: 0.25, ease: "easeInOut" }}
+                  className="absolute flex items-center justify-center"
+                >
+                  {theme === "dark" ? (
+                    <Sun className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                  ) : (
+                    <Moon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </MagneticSlot>
+            {hovered === "theme" && (
+              <motion.span
+                initial={{ opacity: 0, x: -4 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded-md bg-primary px-2.5 py-1 text-xs font-medium text-primary-foreground"
+                aria-hidden="true"
+              >
+                {theme === "dark" ? "Light Mode" : "Dark Mode"}
+              </motion.span>
+            )}
+          </button>
         </nav>
       </aside>
 
@@ -153,6 +213,29 @@ export function FloatingNav() {
           >
             <FileDown className="h-[17px] w-[17px]" strokeWidth={1.75} aria-hidden="true" />
           </a>
+          <span className="mx-0.5 h-6 w-px bg-border/70" aria-hidden="true" />
+          <button
+            onClick={toggleTheme}
+            className="relative flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={theme}
+                initial={{ opacity: 0, rotate: -30, scale: 0.8 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 30, scale: 0.8 }}
+                transition={reduced ? { duration: 0 } : { duration: 0.25, ease: "easeInOut" }}
+                className="absolute flex items-center justify-center"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-[17px] w-[17px]" strokeWidth={1.75} />
+                ) : (
+                  <Moon className="h-[17px] w-[17px]" strokeWidth={1.75} />
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </button>
         </div>
       </nav>
     </>

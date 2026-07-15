@@ -40,15 +40,18 @@ export default function HeroBackground() {
       const w = canvas.width;
       const h = canvas.height;
       ctx.clearRect(0, 0, w, h);
-      ctx.globalCompositeOperation = "lighter";
+      const isLight = document.documentElement.classList.contains("light");
+      ctx.globalCompositeOperation = isLight ? "source-over" : "lighter";
 
       for (const b of blobs) {
         const cx = (b.x + Math.sin(t * b.speed + b.phase) * 0.12) * w;
         const cy = (b.y + Math.cos(t * b.speed * 1.3 + b.phase) * 0.1) * h;
         const rad = Math.min(w, h) * b.r;
         const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
-        g.addColorStop(0, `rgba(${b.hue}, 0.55)`);
-        g.addColorStop(0.5, `rgba(${b.hue}, 0.18)`);
+        const opacityMain = isLight ? 0.22 : 0.55;
+        const opacityMid = isLight ? 0.08 : 0.18;
+        g.addColorStop(0, `rgba(${b.hue}, ${opacityMain})`);
+        g.addColorStop(0.5, `rgba(${b.hue}, ${opacityMid})`);
         g.addColorStop(1, `rgba(${b.hue}, 0)`);
         ctx.fillStyle = g;
         ctx.beginPath();
