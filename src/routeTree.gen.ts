@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProcessRouteImport } from './routes/process'
-import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as DesignSystemRouteImport } from './routes/design-system'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -27,11 +26,6 @@ const ProjectsRoute = ProjectsRouteImport.update({
 const ProcessRoute = ProcessRouteImport.update({
   id: '/process',
   path: '/process',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlaygroundRoute = PlaygroundRouteImport.update({
-  id: '/playground',
-  path: '/playground',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DesignSystemRoute = DesignSystemRouteImport.update({
@@ -70,7 +64,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/design-system': typeof DesignSystemRoute
-  '/playground': typeof PlaygroundRoute
   '/process': typeof ProcessRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/projects/$slug': typeof ProjectsSlugRoute
@@ -81,7 +74,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/design-system': typeof DesignSystemRoute
-  '/playground': typeof PlaygroundRoute
   '/process': typeof ProcessRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects': typeof ProjectsIndexRoute
@@ -92,7 +84,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/design-system': typeof DesignSystemRoute
-  '/playground': typeof PlaygroundRoute
   '/process': typeof ProcessRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/projects/$slug': typeof ProjectsSlugRoute
@@ -105,7 +96,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/design-system'
-    | '/playground'
     | '/process'
     | '/projects'
     | '/projects/$slug'
@@ -116,7 +106,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/design-system'
-    | '/playground'
     | '/process'
     | '/projects/$slug'
     | '/projects'
@@ -126,7 +115,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/design-system'
-    | '/playground'
     | '/process'
     | '/projects'
     | '/projects/$slug'
@@ -138,7 +126,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   DesignSystemRoute: typeof DesignSystemRoute
-  PlaygroundRoute: typeof PlaygroundRoute
   ProcessRoute: typeof ProcessRoute
   ProjectsRoute: typeof ProjectsRouteWithChildren
 }
@@ -157,13 +144,6 @@ declare module '@tanstack/react-router' {
       path: '/process'
       fullPath: '/process'
       preLoaderRoute: typeof ProcessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/playground': {
-      id: '/playground'
-      path: '/playground'
-      fullPath: '/playground'
-      preLoaderRoute: typeof PlaygroundRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/design-system': {
@@ -230,7 +210,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   DesignSystemRoute: DesignSystemRoute,
-  PlaygroundRoute: PlaygroundRoute,
   ProcessRoute: ProcessRoute,
   ProjectsRoute: ProjectsRouteWithChildren,
 }

@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { Reveal } from "@/components/reveal";
 
-type LinkTo = "/projects" | "/process" | "/design-system" | "/about" | "/contact" | "/playground";
+type LinkTo = "/projects" | "/process" | "/design-system" | "/about" | "/contact";
 
 export function SectionHeader({
   index,

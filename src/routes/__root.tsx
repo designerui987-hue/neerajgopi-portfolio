@@ -96,8 +96,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Gopi Neeraj Kumar — UI/UX Designer" },
       { name: "twitter:description", content: "Portfolio of Gopi Neeraj Kumar, a junior UI/UX designer focused on calm, considered interfaces." },
-      { property: "og:image", content: "/images/hrms/cover.png" },
-      { name: "twitter:image", content: "/images/hrms/cover.png" },
+      { property: "og:image", content: "/images/cover.png" },
+      { name: "twitter:image", content: "/images/cover.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

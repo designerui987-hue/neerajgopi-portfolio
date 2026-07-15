@@ -20,7 +20,6 @@ const items = [
   { to: "/projects", label: "Projects", icon: Layers },
   { to: "/process", label: "Process", icon: Workflow },
   { to: "/design-system", label: "System", icon: Palette },
-  { to: "/playground", label: "Playground", icon: Sparkles },
   { to: "/about", label: "About", icon: User },
   { to: "/contact", label: "Contact", icon: Mail },
 ] as const;
