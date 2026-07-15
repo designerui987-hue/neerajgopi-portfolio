@@ -28,6 +28,11 @@ export const Route = createFileRoute("/projects/$slug")({
         { name: "description", content: p.description },
         { property: "og:title", content: `${p.title} — Case study` },
         { property: "og:description", content: p.description },
+        { property: "og:image", content: p.coverImage || "/images/hrms/cover.png" },
+        { name: "twitter:image", content: p.coverImage || "/images/hrms/cover.png" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: `${p.title} — Case study` },
+        { name: "twitter:description", content: p.description },
       ],
     };
   },
