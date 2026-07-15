@@ -44,7 +44,7 @@ const FLAGSHIP_SLUG = "hrms";
 
 function CaseStudyNotFound() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-32 text-center md:pl-28 lg:pl-72">
+    <div className="mx-auto max-w-3xl px-6 py-32 text-center lg:pl-28">
       <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">404</p>
       <h1 className="mt-4 font-display text-4xl text-foreground">
         Case study not found
@@ -74,7 +74,7 @@ function CaseStudy() {
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto w-full max-w-6xl px-6 pb-32 pt-16 md:pl-28 lg:pl-72 lg:pr-12 lg:pt-24"
+      className="relative mx-auto w-full max-w-6xl px-6 pb-32 pt-16 lg:pl-28 lg:pr-12 lg:pt-24"
     >
       {/* Back */}
       <Link
