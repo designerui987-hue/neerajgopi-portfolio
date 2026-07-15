@@ -37,7 +37,7 @@ const LAYOUT = [
     aspect: "aspect-[16/10]",
     tone: "flagship" as const,
   },
-  // prism — default, right
+  // nova — default, right
   {
     col: "md:col-span-4 md:col-start-9 md:mt-16",
     aspect: "aspect-[3/4]",
@@ -50,9 +50,9 @@ function Projects() {
 
   return (
     <PageShell
-      eyebrow="Selected work · 2024 — 2026"
+      eyebrow="Selected work · 2025 — 2026"
       title="Projects"
-      description="A small set of early case studies from coursework, freelance, and self-initiated work. Each one is written up as: problem, constraints, process, and outcome."
+      description="Selected case studies detailing my work on production systems, design systems, and solo product builds."
     >
       <Stagger className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-x-6 md:gap-y-16" stagger={0.09}>
         {projects.map((p, i) => {
@@ -77,17 +77,24 @@ function Projects() {
                   className={`relative overflow-hidden rounded-3xl border border-border/70 bg-surface ${layout.aspect}`}
                   style={{ boxShadow: "var(--shadow-soft)" }}
                 >
-                  {/* Base grid pattern with subtle skew "distort" on hover */}
-                  <motion.div
-                    className="absolute inset-0 grid-bg opacity-60"
-                    initial={false}
-                    whileHover={
-                      reduced
-                        ? undefined
-                        : { scale: 1.08, skewX: "-1.5deg", skewY: "0.5deg", opacity: 1 }
-                    }
-                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                  />
+                  {p.coverImage ? (
+                    <img
+                      src={p.coverImage}
+                      alt={p.title}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    />
+                  ) : (
+                    <motion.div
+                      className="absolute inset-0 grid-bg opacity-60"
+                      initial={false}
+                      whileHover={
+                        reduced
+                          ? undefined
+                          : { scale: 1.08, skewX: "-1.5deg", skewY: "0.5deg", opacity: 1 }
+                      }
+                      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  )}
                   {/* Warm accent glow */}
                   <div
                     className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"

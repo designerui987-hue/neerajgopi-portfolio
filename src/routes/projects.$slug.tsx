@@ -129,6 +129,22 @@ function CaseStudy() {
                 <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
                   {d.detail}
                 </p>
+                {d.image && (
+                  <div className="mt-6 overflow-hidden rounded-xl border border-border bg-background">
+                    <img
+                      src={d.image}
+                      alt={d.title}
+                      className="w-full h-auto object-cover max-w-full"
+                      style={{ aspectRatio: "16/10" }}
+                      loading="lazy"
+                    />
+                    {d.caption && (
+                      <p className="border-t border-border bg-surface-elevated px-4 py-3 text-xs text-muted-foreground">
+                        {d.caption}
+                      </p>
+                    )}
+                  </div>
+                )}
               </motion.article>
             ))}
           </Stagger>
@@ -174,27 +190,29 @@ function CaseStudy() {
       </Section>
 
       {/* Next */}
-      <Reveal className="mt-24 border-t border-border pt-10">
-        <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-          <div>
-            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Next case study
+      {projects.length > 1 && (
+        <Reveal className="mt-24 border-t border-border pt-10">
+          <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+            <div>
+              <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                Next case study
+              </div>
+              <div className="mt-2 font-display text-2xl text-foreground">
+                {next.title}
+              </div>
             </div>
-            <div className="mt-2 font-display text-2xl text-foreground">
-              {next.title}
-            </div>
+            <Link
+              to="/projects/$slug"
+              params={{ slug: next.slug }}
+              className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-premium)]"
+              style={{ boxShadow: "var(--shadow-float)" }}
+            >
+              Continue reading
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
           </div>
-          <Link
-            to="/projects/$slug"
-            params={{ slug: next.slug }}
-            className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-premium)]"
-            style={{ boxShadow: "var(--shadow-float)" }}
-          >
-            Continue reading
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-        </div>
-      </Reveal>
+        </Reveal>
+      )}
     </motion.div>
   );
 }
@@ -216,8 +234,16 @@ function LightHero({ project }: { project: Project }) {
           {project.description}
         </p>
       </div>
-      <div className="mt-12">
-        <PlaceholderCard label={`${project.cover} — Hero`} aspect="aspect-[16/9]" />
+      <div className="mt-12 overflow-hidden rounded-3xl border border-border/70 bg-surface">
+        {project.coverImage ? (
+          <img
+            src={project.coverImage}
+            alt={project.title}
+            className="w-full h-auto object-cover aspect-[16/9]"
+          />
+        ) : (
+          <PlaceholderCard label={`${project.cover} — Hero`} aspect="aspect-[16/9]" />
+        )}
       </div>
       <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-4">
         <Meta k="Role" v={project.role} />
@@ -268,14 +294,24 @@ function FlagshipHero({ project }: { project: Project }) {
               style={{ scale, y, opacity }}
               className="relative h-full w-full overflow-hidden rounded-3xl border border-border/70 bg-surface"
             >
-              <div className="absolute inset-0 grid-bg opacity-70" />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "radial-gradient(ellipse 65% 55% at 50% 45%, oklch(0.74 0.15 45 / 0.18), transparent 72%)",
-                }}
-              />
+              {project.coverImage ? (
+                <img
+                  src={project.coverImage}
+                  alt={project.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              ) : (
+                <>
+                  <div className="absolute inset-0 grid-bg opacity-70" />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse 65% 55% at 50% 45%, oklch(0.74 0.15 45 / 0.18), transparent 72%)",
+                    }}
+                  />
+                </>
+              )}
               <div className="absolute right-5 top-5 inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-background/60 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-accent backdrop-blur">
                 <span className="h-1 w-1 rounded-full bg-accent" />
                 Flagship
@@ -341,6 +377,22 @@ function FlagshipProcess({ project }: { project: Project }) {
                 <p className="mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
                   {d.detail}
                 </p>
+                {d.image && (
+                  <div className="mt-6 overflow-hidden rounded-xl border border-border bg-background">
+                    <img
+                      src={d.image}
+                      alt={d.title}
+                      className="w-full h-auto object-cover max-w-full"
+                      style={{ aspectRatio: "16/10" }}
+                      loading="lazy"
+                    />
+                    {d.caption && (
+                      <p className="border-t border-border bg-surface-elevated px-4 py-3 text-xs text-muted-foreground">
+                        {d.caption}
+                      </p>
+                    )}
+                  </div>
+                )}
               </motion.article>
             ))}
           </Stagger>

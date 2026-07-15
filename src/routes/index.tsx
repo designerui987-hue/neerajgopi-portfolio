@@ -103,7 +103,7 @@ function Home() {
           index="02"
           eyebrow="Selected work"
           title="A small, honest portfolio."
-          description="Case studies detailing my work on production systems and learning in public. Each one is written up around the problem, constraints, and what I learned."
+          description="Case studies detailing my work on production systems, design systems, and solo product builds."
           linkTo="/projects"
           linkLabel="All projects"
         />
@@ -123,14 +123,24 @@ function Home() {
                 className="block"
               >
                 <div className="relative aspect-[16/10] overflow-hidden border-b border-border/70">
-                  <div className="absolute inset-0 grid-bg opacity-60 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] group-hover:opacity-100" />
-                  <div
-                    className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-                    style={{
-                      background:
-                        "radial-gradient(ellipse 60% 50% at 50% 40%, oklch(0.68 0.14 45 / 0.10), transparent 70%)",
-                    }}
-                  />
+                  {p.coverImage ? (
+                    <img
+                      src={p.coverImage}
+                      alt={p.title}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 grid-bg opacity-60 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] group-hover:opacity-100" />
+                      <div
+                        className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                        style={{
+                          background:
+                            "radial-gradient(ellipse 60% 50% at 50% 40%, oklch(0.68 0.14 45 / 0.10), transparent 70%)",
+                        }}
+                      />
+                    </>
+                  )}
                   <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-border/70 bg-surface/80 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground backdrop-blur">
                     <span className="h-1 w-1 rounded-full bg-accent" />
                     {p.category}

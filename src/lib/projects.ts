@@ -1,15 +1,16 @@
 export type Project = {
   slug: string;
   title: string;
-  category: "SaaS Dashboard" | "Landing Page" | "Mobile App" | "UI Exploration";
+  category: "SaaS Dashboard" | "Landing Page" | "Mobile App" | "UI Exploration" | "Fintech / Dashboard";
   description: string;
   role: string;
   tools: string[];
   year: string;
   cover: string;
+  coverImage?: string;
   problem: string;
   constraints: string[];
-  decisions: { title: string; detail: string }[];
+  decisions: { title: string; detail: string; image?: string; caption?: string }[];
   outcomes: string[];
   learnings: string[];
 };
@@ -25,6 +26,7 @@ export const projects: Project[] = [
     tools: ["Figma", "Lovable"],
     year: "2025 – 2026",
     cover: "HRMS Dashboard",
+    coverImage: "/images/hrms/cover.png",
     problem:
       "The company's internal HR processes (leaves, attendance, onboarding, and payroll) were scattered across separate third-party tools, spreadsheets, and manual emails. This caused high friction for employees and significant administrative overhead for HR managers.",
     constraints: [
@@ -36,22 +38,30 @@ export const projects: Project[] = [
       {
         title: "Leaves Module: Calendar-first requesting",
         detail:
-          "Designed a clean, visual leave request dashboard that centers around a team calendar, allowing employees to see who is out before requesting, and managers to approve requests directly from their daily schedule."
+          "Designed a clean, visual leave request dashboard that centers around a team calendar, allowing employees to see who is out before requesting, and managers to approve requests directly from their daily schedule.",
+        image: "/images/hrms/leaves.png",
+        caption: "The Leaves module calendar view allows team members to check availability before requesting time off."
       },
       {
         title: "Attendance Module: Simplified daily check-ins",
         detail:
-          "Created a low-friction clock-in/out widget for the main dashboard, reducing the tracking process to a single tap, while providing detailed visual logs for monthly verification."
+          "Created a low-friction clock-in/out widget for the main dashboard, reducing the tracking process to a single tap, while providing detailed visual logs for monthly verification.",
+        image: "/images/hrms/attendance.png",
+        caption: "The daily attendance clock-in widget simplifies check-ins to a single tap, with active visual verification logs."
       },
       {
         title: "Pre-onboarding Flow: Step-by-step checklist",
         detail:
-          "Replaced long, intimidating PDF forms with a step-by-step pre-onboarding wizard for new hires, allowing them to upload documents and complete tasks at their own pace before their first day."
+          "Replaced long, intimidating PDF forms with a step-by-step pre-onboarding wizard for new hires, allowing them to upload documents and complete tasks at their own pace before their first day.",
+        image: "/images/hrms/preonboarding.png",
+        caption: "The digital pre-onboarding checklist enables new hires to complete tasks and securely upload documentation before day one."
       },
       {
         title: "Payroll Views: Clean salary breakdown",
         detail:
-          "Designed a secure and clear salary breakdown layout, transforming complex tax and deduction lists into clean, readable cards with downloadable payslips."
+          "Designed a secure and clear salary breakdown layout, transforming complex tax and deduction lists into clean, readable cards with downloadable payslips.",
+        image: "/images/hrms/payroll.png",
+        caption: "The payroll view presents clear salary breakdowns, deductions, and quick access to downloadable payslips."
       }
     ],
     outcomes: [
@@ -67,48 +77,55 @@ export const projects: Project[] = [
     ]
   },
   {
-    slug: "prism-explorations",
-    title: "Prism — Weekly UI explorations",
-    category: "UI Exploration",
+    slug: "nova",
+    title: "Nova — AI Stock Analysis Dashboard",
+    category: "Fintech / Dashboard",
     description:
-      "An ongoing set of small weekly studies — components, transitions, and layout experiments — used mostly to learn and get feedback.",
-    role: "Designer",
-    tools: ["Figma", "Framer"],
-    year: "2024 – 2026",
-    cover: "Prism Studies",
+      "An AI-powered stock analysis platform that gives beginners clear Buy/Hold/Sell recommendations instead of raw market data. Designed an interactive dashboard combining candlestick charts, company overview, technical indicators, and AI insight cards, with a premium dark theme suited to fintech products.",
+    role: "Designer & Developer (solo, full-stack)",
+    tools: ["Next.js", "TypeScript", "Tailwind", "shadcn/ui", "Framer Motion", "FastAPI", "Python", "Figma"],
+    year: "2026",
+    cover: "Nova Dashboard",
+    coverImage: "/images/nova/cover.png",
     problem:
-      "As a junior designer, I don't get enough shipped projects to grow quickly. I needed a low-stakes way to practice specific skills (motion, forms, data density) and get feedback on them regularly.",
+      "Most stock analysis tools are designed for professional day traders — they overwhelm beginner investors with raw candlestick charts, technical indicators, and order books. Non-expert investors struggle to answer the simple question: 'Is this stock a good buy right now, and why?'",
     constraints: [
-      "One small study per week, timeboxed to a few hours",
-      "Has to work as a screenshot for social feedback, not a full case study",
-      "No client, no brief — I set my own tiny problem each time"
+      "Solo project requiring ownership of the entire lifecycle — from visual design and typography choices in Figma to full-stack React and FastAPI development",
+      "Designing for trust and clarity in fintech, ensuring that AI-generated buy/sell recommendations are presented with clear confidence scores and explainable risk levels rather than black-box suggestions",
+      "Simplifying complex financial data (moving averages, volume charts, company profiles) into a cohesive dashboard structure that works seamlessly across desktop and mobile screens"
     ],
     decisions: [
       {
-        title: "Timebox over polish",
+        title: "AI Recommendation Cards",
         detail:
-          "Each study is capped at a few hours. If it isn't done, it ships rough — the point is the reps, not the pixels."
+          "Designed plain-language Buy/Hold/Sell recommendation blocks at the top of the interface. Each card displays a confidence score, a risk level rating, and a clear bulleted breakdown of the key factors driving the AI's recommendation.",
+        image: "/images/nova/insight-cards.png",
+        caption: "Plain-language AI recommendation cards displaying confidence levels, risk ratings, and underlying analysis."
       },
       {
-        title: "Pick one skill per week",
+        title: "Interactive Charts & Technical Indicators",
         detail:
-          "Each study focuses on a single thing — a form pattern, an empty state, a motion detail — so feedback stays specific."
+          "Simplified candlestick charting for beginners by overlaying simple moving averages and technical indicators as toggleable layers, allowing users to switch between simplified views and detailed historical data.",
+        image: "/images/nova/chart-view.png",
+        caption: "Interactive candlestick charts with toggleable technical indicators and simple moving averages."
       },
       {
-        title: "Post + write two sentences",
+        title: "Unified Stock Dashboard Layout",
         detail:
-          "I try to always share the study with two sentences of intent, so people can react to the idea, not just the visuals."
+          "Arranged stock search, real-time price charts, company financial overviews, and AI-powered insights into a responsive grid that prioritizes the most actionable recommendations first, adapting beautifully to phones and tablets.",
+        image: "/images/nova/dashboard.png",
+        caption: "The unified stock dashboard layout presenting charts, company overview, and AI recommendation side-by-side."
       }
     ],
     outcomes: [
-      "Roughly 20+ small studies published, several reused directly in client and coursework projects",
-      "Consistently getting more specific, actionable feedback than on 'finished' work",
-      "Slowly built a personal component kit from the reusable parts"
+      "Successfully designed and built the complete stock analysis platform end-to-end (Next.js, FastAPI, Python)",
+      "Reduced cognitive load for non-expert investors by replacing complex spreadsheets with clean, plain-language cards",
+      "Tested the interface with beginner investors, who reported high confidence in understanding the Buy/Hold/Sell recommendations"
     ],
     learnings: [
-      "Small, frequent work beat occasional 'big' portfolio pieces for learning speed.",
-      "Writing intent alongside the visual made feedback 10x more useful.",
-      "Not every study needs to be good — most of the value is in the ones I threw away."
+      "Designing for trust and clarity in fintech is critical — users need to understand the 'why' behind AI-generated recommendations before risking capital",
+      "Simplifying complex financial data into a clean, minimalist UI requires aggressive prioritization and cutting out unnecessary data density",
+      "Owning a project end-to-end (design + frontend + backend) taught me how to budget my time and make pragmatic design compromises for engineering speed"
     ]
   }
 ];
