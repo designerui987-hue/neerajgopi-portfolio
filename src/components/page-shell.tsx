@@ -25,7 +25,7 @@ export function PageShell({
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       exit={reduced ? { opacity: 0 } : { opacity: 0, y: -60, filter: "blur(8px)" }}
       transition={{ duration: 0.7, ease: EASE }}
-      className="relative mx-auto w-full max-w-6xl px-6 pb-32 pt-16 lg:pl-28 lg:pr-12 lg:pt-24"
+      className="relative mx-auto w-full max-w-6xl px-6 pb-32 pt-16 md:pl-28 lg:pl-72 lg:pr-12 lg:pt-24"
     >
       <motion.div
         className="mb-16 max-w-3xl"

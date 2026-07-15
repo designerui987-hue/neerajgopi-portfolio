@@ -44,7 +44,7 @@ const FLAGSHIP_SLUG = "hrms";
 
 function CaseStudyNotFound() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-32 text-center lg:pl-28">
+    <div className="mx-auto max-w-3xl px-6 py-32 text-center md:pl-28 lg:pl-72">
       <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">404</p>
       <h1 className="mt-4 font-display text-4xl text-foreground">
         Case study not found
@@ -74,7 +74,7 @@ function CaseStudy() {
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto w-full max-w-6xl px-6 pb-32 pt-16 lg:pl-28 lg:pr-12 lg:pt-24"
+      className="relative mx-auto w-full max-w-6xl px-6 pb-32 pt-16 md:pl-28 lg:pl-72 lg:pr-12 lg:pt-24"
     >
       {/* Back */}
       <Link
@@ -92,12 +92,12 @@ function CaseStudy() {
       )}
 
       {/* Problem */}
-      <Section index="02" label="Problem" title="What I was actually solving">
+      <Section id="02" index="02" label="Problem" title="What I was actually solving">
         <Prose>{project.problem}</Prose>
       </Section>
 
       {/* Constraints */}
-      <Section index="03" label="Constraints" title="What I had to work within">
+      <Section id="03" index="03" label="Constraints" title="What I had to work within">
         <Stagger className="grid grid-cols-1 gap-3 md:grid-cols-2" stagger={0.05}>
           {project.constraints.map((c, i) => (
             <motion.div
@@ -116,7 +116,7 @@ function CaseStudy() {
       {isFlagship ? (
         <FlagshipProcess project={project} />
       ) : (
-        <Section index="04" label="Process" title="The choices that shaped it">
+        <Section id="04" index="04" label="Process" title="The choices that shaped it">
           <Stagger className="grid grid-cols-1 gap-5" stagger={0.06}>
             {project.decisions.map((d, i) => (
               <motion.article
@@ -157,7 +157,7 @@ function CaseStudy() {
       )}
 
       {/* Outcome + learnings */}
-      <Section index="05" label="Outcome & learnings" title="What happened, what I'd change">
+      <Section id="05" index="05" label="Outcome & learnings" title="What happened, what I'd change">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div
             className="rounded-2xl border border-border/70 bg-surface p-6 md:p-8"
@@ -226,7 +226,7 @@ function CaseStudy() {
 
 function LightHero({ project }: { project: Project }) {
   return (
-    <Section index="01" label="Case study">
+    <Section id="01" index="01" label="Case study">
       <div className="mt-4 max-w-4xl">
         <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-border/70 bg-surface px-3 py-1 text-xs font-medium tracking-wide text-muted-foreground">
           <span className="h-1.5 w-1.5 rounded-full bg-accent" />
@@ -277,7 +277,7 @@ function FlagshipHero({ project }: { project: Project }) {
   const opacity = useTransform(scrollYProgress, [0, 0.9], [1, reduced ? 1 : 0.35]);
 
   return (
-    <Section index="01" label="Flagship case study">
+    <Section id="01" index="01" label="Flagship case study">
       <div ref={ref} className="relative mt-4">
         <div className="max-w-4xl">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-background/60 px-3 py-1 text-xs font-medium tracking-wide text-accent">
@@ -347,7 +347,7 @@ function FlagshipHero({ project }: { project: Project }) {
  */
 function FlagshipProcess({ project }: { project: Project }) {
   return (
-    <Section index="04" label="Process" title="The choices that shaped it">
+    <Section id="04" index="04" label="Process" title="The choices that shaped it">
       <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
         <aside className="md:col-span-3">
           <div className="sticky top-28 rounded-2xl border border-border/70 bg-surface p-5">
@@ -410,18 +410,20 @@ function FlagshipProcess({ project }: { project: Project }) {
 /* ---------- primitives ---------- */
 
 function Section({
+  id,
   index,
   label,
   title,
   children,
 }: {
+  id?: string;
   index: string;
   label: string;
   title?: string;
   children: React.ReactNode;
 }) {
   return (
-    <Reveal as="section" className="mt-24 md:mt-32">
+    <Reveal as="section" id={id} className="mt-24 md:mt-32 scroll-mt-28">
       <div className="mb-8 flex items-baseline gap-4 border-b border-border/70 pb-4">
         <span className="font-display text-sm text-accent">{index}</span>
         <span className="text-xs uppercase tracking-[0.22em] text-muted-foreground">

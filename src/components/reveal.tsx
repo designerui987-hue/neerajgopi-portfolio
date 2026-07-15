@@ -10,6 +10,7 @@ export function Reveal({
   blur = true,
   className,
   as = "div",
+  id,
 }: {
   children: ReactNode;
   delay?: number;
@@ -17,6 +18,7 @@ export function Reveal({
   blur?: boolean;
   className?: string;
   as?: "div" | "section" | "li" | "article";
+  id?: string;
 }) {
   const reduced = useReducedMotion();
   const MotionTag = motion[as] as typeof motion.div;
@@ -37,6 +39,7 @@ export function Reveal({
 
   return (
     <MotionTag
+      id={id}
       className={className}
       initial="hidden"
       whileInView="show"

@@ -83,7 +83,7 @@ function Home() {
       <StatsScrollReveal className="mt-20 grid grid-cols-2 gap-8 border-t border-border pt-10 md:grid-cols-4">
         {[
           ["1 yr", "designing full-time"],
-          ["1", "major product shipped (HRMS)"],
+          ["2", "products shipped / designed"],
           ["4", "modules designed end-to-end"],
           ["Figma + Lovable", "primary toolset"],
         ].map(([k, v]) => (

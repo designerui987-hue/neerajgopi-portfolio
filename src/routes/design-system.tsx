@@ -13,7 +13,9 @@ import {
   Circle,
 } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/design-system")({
   head: () => ({
@@ -97,9 +99,27 @@ const colorTokens: Array<{
 ];
 
 function ColorSwatch({ token }: { token: (typeof colorTokens)[number] }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    let colorVal = "";
+    if (typeof window !== "undefined") {
+      colorVal = getComputedStyle(document.documentElement).getPropertyValue(token.varName).trim();
+    }
+    const textToCopy = `${token.varName}: ${colorVal}`;
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch (e) {
+      // fallback
+    }
+  };
+
   return (
     <div
-      className="group overflow-hidden rounded-2xl border border-border/70 bg-surface transition-shadow duration-300 hover:shadow-[var(--shadow-float)]"
+      onClick={handleCopy}
+      className="group overflow-hidden rounded-2xl border border-border/70 bg-surface transition-shadow duration-300 hover:shadow-[var(--shadow-float)] cursor-pointer select-none relative"
       style={{ boxShadow: "var(--shadow-soft)" }}
     >
       <div
@@ -119,6 +139,18 @@ function ColorSwatch({ token }: { token: (typeof colorTokens)[number] }) {
           <div className="text-sm font-medium text-foreground">{token.name}</div>
           <div className="text-xs text-muted-foreground">{token.role}</div>
         </div>
+        <AnimatePresence>
+          {copied && (
+            <motion.span
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="text-[10px] font-semibold text-accent uppercase tracking-wider"
+            >
+              Copied!
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -127,13 +159,48 @@ function ColorSwatch({ token }: { token: (typeof colorTokens)[number] }) {
 /* ---------------- Typography ---------------- */
 
 const typeScale = [
-  { label: "Display / 7xl", cls: "font-display text-7xl leading-[1.02] tracking-tight", meta: "72 / -2%" },
-  { label: "H1 / 5xl", cls: "font-display text-5xl leading-[1.05] tracking-tight", meta: "48 / -2%" },
-  { label: "H2 / 3xl", cls: "font-display text-3xl leading-snug", meta: "30 / -1%" },
-  { label: "H3 / xl", cls: "font-display text-xl leading-snug", meta: "20" },
-  { label: "Body / base", cls: "text-base leading-relaxed", meta: "16 / 1.6" },
-  { label: "Small / sm", cls: "text-sm leading-relaxed text-muted-foreground", meta: "14" },
-  { label: "Caption / xs", cls: "text-xs uppercase tracking-[0.2em] text-muted-foreground", meta: "12 / 200%" },
+  {
+    label: "Display / 7xl",
+    cls: "font-display text-7xl leading-[1.02] tracking-tight",
+    meta: "72 / -2%",
+    specs: "Font: Fraunces | Size: 72px (4.5rem) | Line-height: 1.02 | Tracking: -0.045em",
+  },
+  {
+    label: "H1 / 5xl",
+    cls: "font-display text-5xl leading-[1.05] tracking-tight",
+    meta: "48 / -2%",
+    specs: "Font: Fraunces | Size: 48px (3rem) | Line-height: 1.02 | Tracking: -0.038em",
+  },
+  {
+    label: "H2 / 3xl",
+    cls: "font-display text-3xl leading-snug",
+    meta: "30 / -1%",
+    specs: "Font: Fraunces | Size: 30px (1.875rem) | Line-height: 1.3 | Tracking: -0.03em",
+  },
+  {
+    label: "H3 / xl",
+    cls: "font-display text-xl leading-snug",
+    meta: "20",
+    specs: "Font: Fraunces | Size: 20px (1.25rem) | Line-height: 1.3",
+  },
+  {
+    label: "Body / base",
+    cls: "text-base leading-relaxed",
+    meta: "16 / 1.6",
+    specs: "Font: Inter | Size: 16px (1rem) | Line-height: 1.6",
+  },
+  {
+    label: "Small / sm",
+    cls: "text-sm leading-relaxed text-muted-foreground",
+    meta: "14",
+    specs: "Font: Inter | Size: 14px (0.875rem) | Line-height: 1.5",
+  },
+  {
+    label: "Caption / xs",
+    cls: "text-xs uppercase tracking-[0.2em] text-muted-foreground",
+    meta: "12 / 200%",
+    specs: "Font: Inter | Size: 12px (0.75rem) | Line-height: 2.0 | Tracking: 0.2em",
+  },
 ];
 
 /* ---------------- Spacing ---------------- */
@@ -176,12 +243,37 @@ const iconSet = [
 /* ---------------- Page ---------------- */
 
 function DesignSystem() {
+  const [showGrid, setShowGrid] = useState(false);
+
   return (
     <PageShell
       eyebrow="Foundations · v1.0"
       title="Design system."
       description="The primitives — color, type, spacing, elevation — that keep every surface coherent. Built on an 8-pixel grid, tuned for WCAG-friendly contrast."
     >
+      {/* 8px Spacing Grid Toggle */}
+      <div className="mb-6 flex justify-end">
+        <button
+          onClick={() => setShowGrid(!showGrid)}
+          className={cn(
+            "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium transition-all hover:-translate-y-0.5 cursor-pointer shadow-[var(--shadow-soft)]",
+            showGrid
+              ? "bg-accent border-accent-soft text-accent-foreground"
+              : "bg-surface border-border text-foreground hover:bg-secondary"
+          )}
+        >
+          <Sparkles className="h-3.5 w-3.5" />
+          {showGrid ? "Hide Grid Overlay" : "Show 8px Grid Overlay"}
+        </button>
+      </div>
+
+      {showGrid && (
+        <div
+          className="pointer-events-none fixed inset-0 z-40 bg-[linear-gradient(to_bottom,rgba(196,80,45,0.06)_1px,transparent_1px)] bg-[size:100%_8px]"
+          style={{ mixBlendMode: "multiply" }}
+        />
+      )}
+
       {/* Table of contents */}
       <nav
         aria-label="Design system sections"
@@ -240,12 +332,15 @@ function DesignSystem() {
           {typeScale.map((t) => (
             <div
               key={t.label}
-              className="flex flex-col gap-2 p-6 md:flex-row md:items-baseline md:justify-between md:gap-8 md:p-8"
+              className="group relative flex flex-col gap-2 p-6 md:flex-row md:items-baseline md:justify-between md:gap-8 md:p-8 hover:bg-secondary/40 transition-colors cursor-help"
             >
               <div className={`${t.cls} text-foreground`}>The quiet detail</div>
               <div className="flex shrink-0 items-center gap-4 text-xs text-muted-foreground md:min-w-[180px] md:justify-end">
                 <span className="uppercase tracking-[0.18em]">{t.label}</span>
                 <span>{t.meta}</span>
+              </div>
+              <div className="pointer-events-none absolute bottom-full left-6 z-30 mb-2 hidden rounded-lg border border-border bg-surface px-3 py-2 text-[10px] font-medium tracking-wide text-foreground shadow-[var(--shadow-float)] group-hover:block backdrop-blur-md">
+                {t.specs}
               </div>
             </div>
           ))}
